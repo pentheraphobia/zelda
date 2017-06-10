@@ -10,7 +10,7 @@
   padding-top: 60px;
 }
 
-.boxy button {
+.boxy b {
   padding: 8px 8px 8px 32 px;
   text-decoration: none;
   font-size: 25px;
@@ -19,6 +19,6 @@
   transition: 0.3s;
 }
 
-.boxy button:hover, .offcanvas button:focus {
+.boxy b:hover, .offcanvas b:focus {
   color: #EA9215;
 }
