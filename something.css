@@ -1,6 +1,7 @@
 .boxy {
   height: 100%;
   width: 250px;
+  display: block;
   position: fixed;
   z-index: 1;
   top:0;
