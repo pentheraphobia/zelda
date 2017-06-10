@@ -1,0 +1,24 @@
+.boxy {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top:0;
+  left:0;
+  background-color: #3A4750;
+  overflow-x: hidden;
+  padding-top: 60px;
+}
+
+.boxy button {
+  padding: 8px 8px 8px 32 px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #EEEEEE;
+  display: block;
+  transition: 0.3s;
+}
+
+.boxy button:hover, .offcanvas button:focus {
+  color: #EA9215;
+}
