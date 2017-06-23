@@ -9,6 +9,7 @@ var ballDy = -2;
 var ballRadius = 10;
 var ballColors = ["red","orange","yellow","green","blue","purple"];
 var currentBallColor = "purple";
+var img1 = new Image();
 
 var paddleHeight = 10;
 var paddleWidth = 75;
@@ -66,7 +67,8 @@ function mouseMoveHandler(e) {
 
 function drawBall() {
  ctx.beginPath();
- ctx.arc(ballX,ballY,ballRadius,0,Math.PI*2);
+ ctx.drawImage(img1,(ballX-ballRadius*2),(ballY-ballRadius*2),ballRadius+25,ballRadius+25);
+// ctx.arc(ballX,ballY,ballRadius,0,Math.PI*2);
  ctx.fillStyle = currentBallColor;
  ctx.fill();
  ctx.closePath();
@@ -159,4 +161,5 @@ function draw() {
  }
 }
 
+img1.src="http://i.imgur.com/mJgr0pw.png";
 setInterval(draw,10);
