@@ -137,8 +137,8 @@ function draw() {
    ballDy = -ballDy;
    ballHit += 35;
   }
-  else if (ballY + ballDy < canvas.width-ballRadius) {
-   ballDy = -ballDy;
+  else {
+   document.location.reload();
   }
  }
  if (ballX + ballDx < ballRadius || ballX + ballDx > canvas.width-ballRadius) {
