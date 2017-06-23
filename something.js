@@ -1,10 +1,10 @@
 var canvas = document.getElementById("theCanvas");
 var ctx = canvas.getContext("2d");
 
-
-var ballX = canvas.width/2;
+var score = 0;
+var ballX = Math.floor(Math.random()*(canvas.width-200))+100;
 var ballY = canvas.height-30;
-var ballDx = 2;
+var ballDx = Math.floor(Math.random()*2)*4-2;
 var ballDy = -2;
 var ballRadius = 10;
 var ballColors = ["red","orange","yellow","green","blue","purple"];
@@ -17,7 +17,6 @@ var paddleX = (canvas.width - paddleWidth)/2;
 var rightPressed = false;
 var leftPressed = false;
 var ballHit = 0;
-var score = 0;
 
 var brickRowCount = 3;
 var brickColumnCount = 5;
@@ -32,6 +31,36 @@ for(c=0; c<brickColumnCount; c++) {
  bricks[c] = [];
  for(r=0; r<brickRowCount; r++) {
   bricks[c][r] = { x: 0, y: 0 , status: 1 };
+ }
+}
+
+document.addEventListener("keydown",keyDownHandler,false);
+document.addEventListener("keyup",keyUpHandler,false);
+document.addEventListener("mousemove",mouseMoveHandler,false);
+
+
+function keyDownHandler(e) {
+ if (e.keyCode == 39) {
+  rightPressed = true;
+ }
+ else if (e.keyCode == 37) {
+  leftPressed = true;
+ }
+}
+
+function keyUpHandler(e) {
+ if (e.keyCode == 39) {
+  rightPressed = false;
+ }
+ else if (e.keyCode == 37) {
+  leftPressed = false;
+ }
+}
+
+function mouseMoveHandler(e) {
+ var relativeX = e.clientX - canvas.offsetLeft;
+ if (relativeX > 0 && relativeX < canvas.width) {
+  paddleX = relativeX - paddleWidth/2;
  }
 }
 
@@ -78,6 +107,8 @@ function collisionDetection() {
      ballDy = -ballDy;
      b.status = 0;
      score++;
+     if (ballDx > 0) {ballDx+=0.2} else {ballDx-=0.2};
+     if (ballDy > 0) {ballDy+=0.2} else {ballDy-=0.2};
     }
    }
   }
@@ -125,27 +156,6 @@ function draw() {
  if (ballHit > 0) {
   currentBallColor = ballColors[Math.floor(Math.random() * 6)];
   ballHit -= 1;
- }
-}
-
-document.addEventListener("keydown",keyDownHandler,false);
-document.addEventListener("keyup",keyUpHandler,false);
-
-function keyDownHandler(e) {
- if (e.keyCode == 39) {
-  rightPressed = true;
- }
- else if (e.keyCode == 37) {
-  leftPressed = true;
- }
-}
-
-function keyUpHandler(e) {
- if (e.keyCode == 39) {
-  rightPressed = false;
- }
- else if (e.keyCode == 37) {
-  leftPressed = false;
  }
 }
 
