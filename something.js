@@ -6,7 +6,7 @@ var ballX = canvas.width/2;
 var ballY = canvas.height-30;
 var ballDx = 2;
 var ballDy = -2;
-var ballRadius = 25;
+var ballRadius = 10;
 var ballColors = ["red","orange","yellow","green","blue","purple"];
 var currentBallColor = "purple";
 
@@ -17,6 +17,23 @@ var paddleX = (canvas.width - paddleWidth)/2;
 var rightPressed = false;
 var leftPressed = false;
 var ballHit = 0;
+var score = 0;
+
+var brickRowCount = 3;
+var brickColumnCount = 5;
+var brickWidth = 75;
+var brickHeight = 20;
+var brickPadding = 10;
+var brickOffsetTop = 30;
+var brickOffsetLeft = 30;
+
+var bricks = [];
+for(c=0; c<brickColumnCount; c++) {
+ bricks[c] = [];
+ for(r=0; r<brickRowCount; r++) {
+  bricks[c][r] = { x: 0, y: 0 , status: 1 };
+ }
+}
 
 function drawBall() {
  ctx.beginPath();
@@ -34,10 +51,52 @@ function drawPaddle() {
  ctx.closePath();
 }
 
+function drawBricks() {
+ for(c=0; c<brickColumnCount; c++) {
+  for(r=0; r<brickRowCount; r++) {
+   if(bricks[c][r].status == 1) {
+    var brickX = (c*(brickWidth+brickPadding))+brickOffsetLeft;
+    var brickY = (r*(brickHeight+brickPadding))+brickOffsetTop;
+    bricks[c][r].x = brickX;
+    bricks[c][r].y = brickY;
+    ctx.beginPath();
+    ctx.rect(brickX,brickY,brickWidth,brickHeight);
+    ctx.fillStyle = "#000000";
+    ctx.fill();
+    ctx.closePath();
+   }
+  }
+ }
+}
+
+function collisionDetection() {
+ for(c=0; c<brickColumnCount; c++) {
+  for(r=0; r<brickRowCount; r++) {
+   var b = bricks[c][r];
+   if(b.status == 1) {
+    if(ballX > b.x && ballX < b.x+brickWidth && ballY > b.y && ballY < b.y+brickHeight) {
+     ballDy = -ballDy;
+     b.status = 0;
+     score++;
+    }
+   }
+  }
+ }
+}
+
+function drawScore() {
+ ctx.font = "16px Arial";
+ ctx.fillStyle = "#800080";
+ ctx.fillText("Score: "+score,8,20);
+}
+
 function draw() {
  ctx.clearRect(0,0,canvas.width,canvas.height);
+ drawBricks();
  drawBall();
  drawPaddle();
+ collisionDetection();
+ drawScore();
  if (ballY + ballDy < ballRadius) {
   ballDy = -ballDy;
   currentBallColor = ballColors[Math.floor(Math.random() * 6)];
